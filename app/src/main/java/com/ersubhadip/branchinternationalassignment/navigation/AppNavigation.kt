@@ -11,13 +11,13 @@ import androidx.navigation.navArgument
 @Composable
 fun AppNavigation(
     navController: NavHostController = rememberNavController(),
-    startDestination: String = Destinations.Splash.route
+    startDestination: String = Destinations.Login.route
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(route = Destinations.Splash.route) {
+        composable(route = Destinations.Login.route) {
 
         }
         composable(route = Destinations.Home.route) {

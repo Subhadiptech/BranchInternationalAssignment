@@ -15,7 +15,7 @@ val White = "#ffffff".toColor()
 val Transparent = "#00000000".toColor()
 val GrayDark = "#242424".toColor()
 val Orange = "#FF6600".toColor()
-val BluePrimary = "#FF03A9F4".toColor()
+val BluePrimary = "#4FACF7".toColor()
 
 
 fun String.toColor() = Color(android.graphics.Color.parseColor(this))

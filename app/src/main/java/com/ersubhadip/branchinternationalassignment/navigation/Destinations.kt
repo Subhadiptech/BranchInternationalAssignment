@@ -1,7 +1,7 @@
 package com.ersubhadip.branchinternationalassignment.navigation
 
 sealed class Destinations(val route: String) {
-    object Splash : Destinations(Routes.Splash)
+    object Login : Destinations(Routes.Login)
     object Home : Destinations(Routes.Home)
     object Chat : Destinations(Routes.Chat)
 

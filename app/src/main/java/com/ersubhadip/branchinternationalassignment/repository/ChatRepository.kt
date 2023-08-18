@@ -61,8 +61,8 @@ class ChatRepository(private val apis: ChatAPI) {
     }
 
 
-    suspend fun sendChat(id: Int, message: String) {
-        val resp = apis.sendChat(SenderRequestBody(id = id, body = message))
+    suspend fun sendChat(auth: String, id: Int, message: String) {
+        val resp = apis.sendChat(auth, SenderRequestBody(id = id, body = message))
         if (resp.isSuccessful && resp.body() != null) {
             _sendersChatList.emit(
                 StandardResponse(

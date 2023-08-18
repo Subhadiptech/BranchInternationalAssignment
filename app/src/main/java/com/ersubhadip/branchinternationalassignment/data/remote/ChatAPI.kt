@@ -18,5 +18,8 @@ interface ChatAPI {
     suspend fun getChats(@Header("X-Branch-Auth-Token") auth_token: String): Response<List<ChatItem>>
 
     @POST("api/messages")
-    suspend fun sendChat(@Body requestBody: SenderRequestBody): Response<List<ChatItem>>
+    suspend fun sendChat(
+        @Header("X-Branch-Auth-Token") auth_token: String,
+        @Body requestBody: SenderRequestBody
+    ): Response<List<ChatItem>>
 }
