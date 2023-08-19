@@ -35,6 +35,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.ersubhadip.branchinternationalassignment.navigation.Destinations
+import com.ersubhadip.branchinternationalassignment.presentation.handler.BackPressHandler
 import com.ersubhadip.branchinternationalassignment.ui.theme.Black
 import com.ersubhadip.branchinternationalassignment.ui.theme.BluePrimary
 import com.ersubhadip.branchinternationalassignment.ui.theme.GrayDark
@@ -49,7 +52,7 @@ import kotlinx.coroutines.flow.consumeAsFlow
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun ChatScreen(id: Int, userId: String, body: String, date: String) {
+fun ChatScreen(id: Int, userId: String, body: String, date: String, navController: NavController) {
 
     val viewModel: ChatViewModel = hiltViewModel()
 
@@ -59,6 +62,14 @@ fun ChatScreen(id: Int, userId: String, body: String, date: String) {
     val isReplyFieldVisible = remember {
         mutableStateOf(true)
     }
+
+    BackPressHandler(onBackPressed = {
+        navController.navigate(Destinations.Home.route) {
+            popUpTo(Destinations.Login.route) {
+                inclusive = true
+            }
+        }
+    })
 
     val context = LocalContext.current
 

@@ -72,6 +72,8 @@ class ChatViewModel @Inject constructor(
                         ViewModelToChatScreenEvents.Failure(event.errorMessage)
                     )
                 }
+
+                else -> Unit
             }
         }
     }

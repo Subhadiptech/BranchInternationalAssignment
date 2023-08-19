@@ -53,7 +53,13 @@ fun AppNavigation(
             val date = navBackStack.arguments?.getString("date")
             val body = navBackStack.arguments?.getString("body")
             if (id != null && userID != null && date != null && body != null) {
-                ChatScreen(id = id?.toInt() ?: -1, userId = userID, body = body, date = date)
+                ChatScreen(
+                    id = id.toInt(),
+                    userId = userID,
+                    body = body,
+                    date = date,
+                    navController = navController
+                )
             } else {
                 return@composable
             }

@@ -28,6 +28,7 @@ class HomeViewModel @Inject constructor(
     val chats: StateFlow<List<ChatItem>> get() = _chats
 
     init {
+        emitHomeScreenEvents(ViewModelToHomeScreenEvents.Loading)
         viewModelScope.launch {
             getChats()
         }
@@ -49,11 +50,16 @@ class HomeViewModel @Inject constructor(
     private fun emitHomeScreenEvents(event: ViewModelToHomeScreenEvents) {
         viewModelScope.launch {
             when (event) {
-                is ViewModelToHomeScreenEvents.Success -> {
+
+                ViewModelToHomeScreenEvents.Loading -> {
+                    homeViewModelToHomeScreenEvents.send(ViewModelToHomeScreenEvents.Loading)
+                }
+
+                ViewModelToHomeScreenEvents.Success -> {
                     homeViewModelToHomeScreenEvents.send(ViewModelToHomeScreenEvents.Success)
                 }
 
-                is ViewModelToHomeScreenEvents.Failure -> {
+                ViewModelToHomeScreenEvents.Failure -> {
                     homeViewModelToHomeScreenEvents.send(ViewModelToHomeScreenEvents.Failure)
                 }
             }
@@ -69,6 +75,7 @@ class HomeViewModel @Inject constructor(
 }
 
 sealed class ViewModelToHomeScreenEvents {
+    data object Loading : ViewModelToHomeScreenEvents()
     data object Success : ViewModelToHomeScreenEvents()
     data object Failure : ViewModelToHomeScreenEvents()
 }
