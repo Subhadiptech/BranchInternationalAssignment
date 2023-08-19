@@ -1,6 +1,7 @@
 
 <!--![Cover](https://user-images.githubusercontent.com/62587060/216439920-a319c685-58ed-4a06-9699-874594f9fbb2.png)-->
-![Quick Chat](https://github.com/Subhadiptech/BranchInternationalAssignment/assets/89024718/d4d2da7a-af39-428d-9672-93d64e1f7ca2)
+
+![Quick Chat](https://github.com/Subhadiptech/BranchInternationalAssignment/assets/89024718/256d4dd4-42f1-4459-8a20-2c3a00270b74)
 
 
 
@@ -26,7 +27,8 @@ Assignment by Branch International (Android)
 
 This app uses [MVVM(Model View View-Model)](https://developer.android.com/topic/architecture#recommended-app-arch) architecture.
 
-![Rest API](https://github.com/Subhadiptech/BranchInternationalAssignment/assets/89024718/7ff3b8a4-5b60-4304-ae32-1ecbfbad137e)
+
+![Rest API](https://github.com/Subhadiptech/BranchInternationalAssignment/assets/89024718/b36959b2-4149-4463-9acc-a7d3b83aa7f9)
 
 
 ## My Profile:
