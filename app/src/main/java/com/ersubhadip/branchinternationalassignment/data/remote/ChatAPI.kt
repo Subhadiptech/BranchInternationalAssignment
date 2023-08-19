@@ -21,5 +21,5 @@ interface ChatAPI {
     suspend fun sendChat(
         @Header("X-Branch-Auth-Token") auth_token: String,
         @Body requestBody: SenderRequestBody
-    ): Response<List<ChatItem>>
+    ): Response<ChatItem>
 }

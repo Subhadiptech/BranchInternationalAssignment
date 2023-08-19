@@ -6,6 +6,6 @@ data class LoginRequestBody(
 )
 
 data class SenderRequestBody(
-    val id: Int,
+    val thread_id: Int,
     val body: String
 )

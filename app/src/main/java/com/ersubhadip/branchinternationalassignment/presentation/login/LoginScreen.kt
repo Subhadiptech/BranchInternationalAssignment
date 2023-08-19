@@ -19,12 +19,18 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ersubhadip.branchinternationalassignment.navigation.Destinations
+import com.ersubhadip.branchinternationalassignment.ui.theme.Black
 import com.ersubhadip.branchinternationalassignment.ui.theme.BluePrimary
+import com.ersubhadip.branchinternationalassignment.ui.theme.LexendDecaLight
+import com.ersubhadip.branchinternationalassignment.ui.theme.LexendDecaRegular
+import com.ersubhadip.branchinternationalassignment.ui.theme.LexendDecaSemiBold
 import com.ersubhadip.branchinternationalassignment.ui.theme.White
 import com.ersubhadip.branchinternationalassignment.utilities.showShortToast
 import kotlinx.coroutines.flow.collectLatest
@@ -62,17 +68,34 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltVi
                 .align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Text(
+                text = "Quick Chat",
+                fontFamily = LexendDecaSemiBold,
+                fontSize = 32.sp,
+                color = BluePrimary
+            )
+            Spacer(modifier = Modifier.height(56.dp))
             OutlinedTextField(
-                label = { Text(text = "User Name") },
+                label = { Text(text = "User Name", fontFamily = LexendDecaRegular) },
                 value = viewModel.usernameState.value,
                 modifier = Modifier
                     .padding(horizontal = 6.dp),
+                textStyle = TextStyle(
+                    color = Black,
+                    fontFamily = LexendDecaRegular,
+                    fontSize = 16.sp
+                ),
                 onValueChange = viewModel::onUsernameChange
             )
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(
-                label = { Text(text = "Password") },
+                label = { Text(text = "Password", fontFamily = LexendDecaRegular) },
                 value = viewModel.passwordState.value,
+                textStyle = TextStyle(
+                    color = Black,
+                    fontFamily = LexendDecaRegular,
+                    fontSize = 16.sp
+                ),
                 modifier = Modifier
                     .padding(horizontal = 6.dp),
                 keyboardOptions = KeyboardOptions(
@@ -85,7 +108,7 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltVi
                 onClick = viewModel::userLogin,
                 colors = ButtonDefaults.buttonColors(containerColor = BluePrimary)
             ) {
-                Text(text = "Login")
+                Text(text = "Login", fontSize = 16.sp, fontFamily = LexendDecaLight)
             }
         }
     }

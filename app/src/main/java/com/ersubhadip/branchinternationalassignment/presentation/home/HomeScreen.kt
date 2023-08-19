@@ -102,7 +102,8 @@ fun HomeScreen(navController: NavController) {
                         body = it.body,
                         id = it.id,
                         date = viewModel.formatDate(it.timestamp),
-                        navController
+                        threadID = it.thread_id,
+                        navController = navController
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                 }
@@ -124,7 +125,14 @@ fun HomeScreen(navController: NavController) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ChatCard(sender: String?, body: String?, id: Int?, date: String, navController: NavController) {
+fun ChatCard(
+    sender: String?,
+    body: String?,
+    id: Int?,
+    threadID: Int?,
+    date: String,
+    navController: NavController
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -135,7 +143,7 @@ fun ChatCard(sender: String?, body: String?, id: Int?, date: String, navControll
             .clickable {
                 navController.navigate(
                     Destinations.Chat.withArgs(
-                        "$id",
+                        "$threadID",
                         sender ?: "",
                         date,
                         body ?: ""

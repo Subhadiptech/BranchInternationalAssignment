@@ -1,6 +1,10 @@
 package com.ersubhadip.branchinternationalassignment.presentation.chat
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -52,6 +56,9 @@ fun ChatScreen(id: Int, userId: String, body: String, date: String) {
     val isReplyVisible = remember {
         mutableStateOf(false)
     }
+    val isReplyFieldVisible = remember {
+        mutableStateOf(true)
+    }
 
     val context = LocalContext.current
 
@@ -62,6 +69,7 @@ fun ChatScreen(id: Int, userId: String, body: String, date: String) {
             when (events) {
                 ViewModelToChatScreenEvents.Success -> {
                     isReplyVisible.value = !isReplyVisible.value
+                    isReplyFieldVisible.value = !isReplyFieldVisible.value
                 }
 
                 is ViewModelToChatScreenEvents.Failure -> {
@@ -122,38 +130,45 @@ fun ChatScreen(id: Int, userId: String, body: String, date: String) {
             }
         }
 
-        Row(
+        AnimatedVisibility(
+            enter = fadeIn() + slideInVertically(),
+            exit = fadeOut() + slideOutVertically(),
+            visible = isReplyFieldVisible.value,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
         ) {
-            OutlinedTextField(
-                label = {
-                    Text(
-                        text = "Reply here...",
-                        fontFamily = LexendDecaLight,
-                        color = GrayDark,
-                        fontSize = 12.sp
-                    )
-                },
-                textStyle = TextStyle(
-                    color = Black,
-                    fontFamily = LexendDecaRegular,
-                    fontSize = 16.sp
-                ),
-                value = viewModel.replyState.value,
+            Row(
                 modifier = Modifier
-                    .padding(horizontal = 6.dp)
-                    .weight(1f),
-                onValueChange = viewModel::onReplyChange
-            )
-            Spacer(modifier = Modifier.width(6.dp))
-            Button(
-                onClick = { viewModel.sendReply() },
-                colors = ButtonDefaults.buttonColors(containerColor = BluePrimary)
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(text = "Reply")
+                OutlinedTextField(
+                    label = {
+                        Text(
+                            text = "Reply here...",
+                            fontFamily = LexendDecaLight,
+                            color = GrayDark,
+                            fontSize = 12.sp
+                        )
+                    },
+                    textStyle = TextStyle(
+                        color = Black,
+                        fontFamily = LexendDecaRegular,
+                        fontSize = 16.sp
+                    ),
+                    value = viewModel.replyState.value,
+                    modifier = Modifier
+                        .padding(horizontal = 6.dp)
+                        .weight(1f),
+                    onValueChange = viewModel::onReplyChange
+                )
+                Spacer(modifier = Modifier.width(6.dp))
+                Button(
+                    onClick = { viewModel.sendReply() },
+                    colors = ButtonDefaults.buttonColors(containerColor = BluePrimary)
+                ) {
+                    Text(text = "Reply")
+                }
             }
         }
     }

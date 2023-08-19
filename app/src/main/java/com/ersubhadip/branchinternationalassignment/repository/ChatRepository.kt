@@ -61,8 +61,8 @@ class ChatRepository @Inject constructor(private val apis: ChatAPI) {
         auth: String,
         id: Int,
         message: String
-    ): Flow<StandardResponse<List<ChatItem>>> = flow {
-        val resp = apis.sendChat(auth, SenderRequestBody(id = id, body = message))
+    ): Flow<StandardResponse<ChatItem>> = flow {
+        val resp = apis.sendChat(auth, SenderRequestBody(thread_id = id, body = message))
         if (resp.isSuccessful && resp.body() != null) {
             emit(
                 StandardResponse(
