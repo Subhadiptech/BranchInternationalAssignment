@@ -3,7 +3,6 @@ package com.ersubhadip.branchinternationalassignment.presentation.home
 import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ersubhadip.branchinternationalassignment.data.local.Session
 import com.ersubhadip.branchinternationalassignment.data.pojos.ChatItem
 import com.ersubhadip.branchinternationalassignment.repository.ChatRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: ChatRepository, private val localData: Session
+    private val repository: ChatRepository
 ) : ViewModel() {
 
     val homeViewModelToHomeScreenEvents = Channel<ViewModelToHomeScreenEvents>()
@@ -36,7 +35,7 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun getChats() {
         viewModelScope.launch {
-            repository.getChats(localData.getAuthToken() ?: "").collectLatest { response ->
+            repository.getChats(repository.getAuth() ?: "").collectLatest { response ->
                 if (response.success && response.payload != null) {
                     _chats.emit(response.payload)
                     emitHomeScreenEvents(ViewModelToHomeScreenEvents.Success)

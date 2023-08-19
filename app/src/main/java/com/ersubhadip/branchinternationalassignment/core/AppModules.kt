@@ -45,7 +45,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun getRepository(api: ChatAPI) = ChatRepository(apis = api)
+    fun getRepository(api: ChatAPI, localStorage: Session) =
+        ChatRepository(apis = api, localStorage = localStorage)
 
     @Provides
     @Singleton

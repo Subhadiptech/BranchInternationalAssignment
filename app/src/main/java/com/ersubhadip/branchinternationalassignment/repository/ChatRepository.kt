@@ -1,5 +1,6 @@
 package com.ersubhadip.branchinternationalassignment.repository
 
+import com.ersubhadip.branchinternationalassignment.data.local.Session
 import com.ersubhadip.branchinternationalassignment.data.pojos.ChatItem
 import com.ersubhadip.branchinternationalassignment.data.pojos.LoginRequestBody
 import com.ersubhadip.branchinternationalassignment.data.pojos.LoginResponse
@@ -10,7 +11,10 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 
-class ChatRepository @Inject constructor(private val apis: ChatAPI) {
+class ChatRepository @Inject constructor(
+    private val apis: ChatAPI,
+    private val localStorage: Session
+) {
 
     suspend fun loginUser(
         username: String,
@@ -55,6 +59,12 @@ class ChatRepository @Inject constructor(private val apis: ChatAPI) {
             )
         }
     }
+
+    suspend fun setAuth(auth: String) {
+        localStorage.setUserAuth(auth)
+    }
+
+    suspend fun getAuth() = localStorage.getAuthToken()
 
 
     suspend fun sendChat(

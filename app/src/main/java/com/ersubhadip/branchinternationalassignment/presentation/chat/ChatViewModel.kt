@@ -4,7 +4,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ersubhadip.branchinternationalassignment.data.local.Session
 import com.ersubhadip.branchinternationalassignment.repository.ChatRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -15,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChatViewModel @Inject constructor(
-    private val repository: ChatRepository, private val localData: Session
+    private val repository: ChatRepository
 ) : ViewModel() {
 
     val chatViewModelToChatScreenEvents = Channel<ViewModelToChatScreenEvents>()
@@ -31,7 +30,7 @@ class ChatViewModel @Inject constructor(
         viewModelScope.launch {
             if (_idState.value != -1 && _replyState.value.isNotEmpty()) {
                 repository.sendChat(
-                    auth = localData.getAuthToken() ?: "",
+                    auth = repository.getAuth() ?: "",
                     id = _idState.value,
                     message = _replyState.value
                 ).collectLatest { resp ->

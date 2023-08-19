@@ -4,7 +4,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ersubhadip.branchinternationalassignment.data.local.Session
 import com.ersubhadip.branchinternationalassignment.repository.ChatRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -14,8 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val repository: ChatRepository,
-    private val localData: Session
+    private val repository: ChatRepository
 ) : ViewModel() {
 
     private val _usernameState = mutableStateOf("")
@@ -83,7 +81,7 @@ class LoginViewModel @Inject constructor(
 
 
     private fun setUserAuth(value: String) {
-        viewModelScope.launch { localData.setUserAuth(value) }
+        viewModelScope.launch { repository.setAuth(value) }
     }
 }
 
