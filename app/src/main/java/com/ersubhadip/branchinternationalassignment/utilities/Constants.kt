@@ -1,4 +1,4 @@
-package com.ersubhadip.branchinternationalassignment.Utilities
+package com.ersubhadip.branchinternationalassignment.utilities
 
 class Constants {
     companion object{

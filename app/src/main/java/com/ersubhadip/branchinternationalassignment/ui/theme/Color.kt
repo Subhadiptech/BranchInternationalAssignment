@@ -12,10 +12,12 @@ val Pink40 = Color(0xFF7D5260)
 
 val Black = "#000000".toColor()
 val White = "#ffffff".toColor()
+val PrimaryGray = "#4e4f4e".toColor()
 val Transparent = "#00000000".toColor()
 val GrayDark = "#242424".toColor()
 val Orange = "#FF6600".toColor()
 val BluePrimary = "#4FACF7".toColor()
+val BlueLight = "#e8f9fa".toColor()
 
 
 fun String.toColor() = Color(android.graphics.Color.parseColor(this))

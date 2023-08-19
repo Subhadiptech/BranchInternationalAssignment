@@ -5,53 +5,49 @@ import com.ersubhadip.branchinternationalassignment.data.pojos.LoginRequestBody
 import com.ersubhadip.branchinternationalassignment.data.pojos.LoginResponse
 import com.ersubhadip.branchinternationalassignment.data.pojos.SenderRequestBody
 import com.ersubhadip.branchinternationalassignment.data.remote.ChatAPI
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-
-class ChatRepository(private val apis: ChatAPI) {
-    private var _loginResponse =
-        MutableStateFlow<StandardResponse<LoginResponse>>(StandardResponse(false, null))
-    val loginResponse: StateFlow<StandardResponse<LoginResponse>> get() = _loginResponse
-
-    private var _chatList =
-        MutableStateFlow<StandardResponse<List<ChatItem>>>(StandardResponse(false, null))
-    val chatList: StateFlow<StandardResponse<List<ChatItem>>> get() = _chatList
-
-    private var _sendersChatList =
-        MutableStateFlow<StandardResponse<List<ChatItem>>>(StandardResponse(false, null))
-    val sendersChatList: StateFlow<StandardResponse<List<ChatItem>>> get() = _chatList
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 
-    suspend fun userLogin(username: String, password: String) {
-        val resp = apis.loginUser(LoginRequestBody(username = username, password = password))
-        if (resp.isSuccessful && resp.body() != null) {
-            _loginResponse.emit(
+class ChatRepository @Inject constructor(private val apis: ChatAPI) {
+
+    suspend fun loginUser(
+        username: String,
+        password: String
+    ): Flow<StandardResponse<LoginResponse>> = flow {
+        val loginUserResponse =
+            apis.loginUser(LoginRequestBody(username = username, password = password))
+
+        if (loginUserResponse.isSuccessful && loginUserResponse.body() != null) {
+            emit(
                 StandardResponse(
                     success = true,
-                    payload = resp.body()
+                    payload = loginUserResponse.body()
                 )
             )
         } else {
-            _loginResponse.emit(
+            emit(
                 StandardResponse(
                     success = false,
                     payload = null
                 )
             )
         }
+
     }
 
-    suspend fun getChats(auth: String) {
+    suspend fun getChats(auth: String): Flow<StandardResponse<List<ChatItem>>> = flow {
         val resp = apis.getChats(auth)
         if (resp.isSuccessful && resp.body() != null) {
-            _chatList.emit(
+            emit(
                 StandardResponse(
                     success = true,
                     payload = resp.body()
                 )
             )
         } else {
-            _chatList.emit(
+            emit(
                 StandardResponse(
                     success = false,
                     payload = null
@@ -61,17 +57,21 @@ class ChatRepository(private val apis: ChatAPI) {
     }
 
 
-    suspend fun sendChat(auth: String, id: Int, message: String) {
+    suspend fun sendChat(
+        auth: String,
+        id: Int,
+        message: String
+    ): Flow<StandardResponse<List<ChatItem>>> = flow {
         val resp = apis.sendChat(auth, SenderRequestBody(id = id, body = message))
         if (resp.isSuccessful && resp.body() != null) {
-            _sendersChatList.emit(
+            emit(
                 StandardResponse(
                     success = true,
                     payload = resp.body()
                 )
             )
         } else {
-            _sendersChatList.emit(
+            emit(
                 StandardResponse(
                     success = false,
                     payload = null

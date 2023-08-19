@@ -1,6 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
+
 }
 
 android {
@@ -29,6 +32,11 @@ android {
             )
         }
     }
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(1_8))
+        }
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -40,11 +48,20 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.0"
     }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    configurations.all {
+        resolutionStrategy {
+            eachDependency {
+                if ((requested.group == "org.jetbrains.kotlin") && (requested.name.startsWith("kotlin-stdlib"))) {
+                    useVersion("1.8.0")
+                }
+            }
         }
     }
 }
@@ -66,6 +83,12 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("androidx.compose.material:material:1.4.3")
+    implementation("androidx.compose.compiler:compiler:1.4.7")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.5.0-beta02")
+    implementation("androidx.activity:activity-compose:1.7.2")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.5.0-beta02")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
     //Coil
     implementation("io.coil-kt:coil:2.4.0")
@@ -79,10 +102,6 @@ dependencies {
     //datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.datastore:datastore-preferences-core:1.0.0")
-
-    //Koin
-    implementation("io.insert-koin:koin-android:3.0.2")
-    implementation("io.insert-koin:koin-androidx-compose:3.1.2")
 
 
     //Moshi
@@ -108,4 +127,14 @@ dependencies {
 
     //datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    //hilt
+    implementation("com.google.dagger:hilt-android:2.47")
+    kapt("com.google.dagger:hilt-android-compiler:2.47")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+}
+
+kapt {
+    correctErrorTypes = true
 }
