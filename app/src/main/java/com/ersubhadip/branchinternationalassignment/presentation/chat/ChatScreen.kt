@@ -65,7 +65,7 @@ fun ChatScreen(id: Int, userId: String, body: String, date: String, navControlle
 
     BackPressHandler(onBackPressed = {
         navController.navigate(Destinations.Home.route) {
-            popUpTo(Destinations.Login.route) {
+            popUpTo(Destinations.Chat.route) {
                 inclusive = true
             }
         }
